@@ -8,6 +8,7 @@ RUN apk add --no-cache git
 # ホットリロード用のツールをインストール
 RUN go install github.com/air-verse/air@latest
 RUN go install github.com/rubenv/sql-migrate/...@latest
+RUN go install github.com/golang/mock/mockgen@latest
 
 # 依存関係をコピー
 COPY go.mod go.sum ./
