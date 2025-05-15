@@ -1,0 +1,288 @@
+openapi: 3.0.0
+info:
+  title: Stackies API
+  version: 1.0.0
+  description: API for Stackies
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: admin
+    description: Admin endpoints
+
+paths:
+  /admin/login:
+    post:
+      summary: Login
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful 認証情報は、Cookieに保存されます。
+  /admin/logout:
+    post:
+      summary: Logout
+      tags:
+        - admin
+      responses:
+        '200':
+          description: Logout successful
+  /admin/maintenance/lang:
+    get:
+      summary: Get all languages
+      tags:
+        - admin
+      responses:
+        '200':
+          description: A list of languages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Language'
+    post:
+      summary: Create language
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostLanguageRequest'
+      responses:
+        '201':
+          description: Language created
+  /admin/maintenance/lang/{id}:
+    put:
+      summary: Update language
+      tags:
+        - admin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+      responses:
+        '200':
+          description: Language updated
+  /admin/maintenance/tool:
+    get:
+      summary: Get all tools
+      tags:
+        - admin
+      responses:
+        '200':
+          description: A list of tools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tool'
+    post:
+      summary: Create tool
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostToolRequest'
+      responses:
+        '201':
+          description: Tool created
+  /admin/maintenance/tool/{id}:
+    put:
+      summary: Update tool
+      tags:
+        - admin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostToolRequest'
+      responses:
+        '200':
+          description: Tool updated
+  /admin/maintenance/memberShip:
+    get:
+      summary: Get all memberShip
+      tags:
+        - admin
+      responses:
+        '200':
+          description: A list of memberShip
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemberShip'
+    post:
+      summary: Create memberShip
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMemberShipRequest'
+      responses:
+        '201':
+          description: MemberShip created
+  /admin/maintenance/memberShip/{id}:
+    put:
+      summary: Update memberShip
+      tags:
+        - admin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMemberShipRequest'
+      responses:
+        '200':
+          description: MemberShip updated
+  /admin/maintenance/industry:
+    get:
+      summary: Get all industry
+      tags:
+        - admin
+      responses:
+        '200':
+          description: A list of industry
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Industry'
+    post:
+      summary: Create industry
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostIndustryRequest'
+      responses:
+        '201':
+          description: Industry created
+  /admin/maintenance/industry/{id}:
+    put:
+      summary: Update industry
+      tags:
+        - admin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostIndustryRequest'
+      responses:
+        '200':
+          description: Industry updated
+components:
+  schemas:
+    Language:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        iconUrl:
+          type: string
+    Tool:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        iconUrl:
+          type: string
+    MemberShip:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Industry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    PostLanguageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        iconUrl:
+          type: string
+    PostToolRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        iconUrl:
+          type: string
+    PostMemberShipRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    PostIndustryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string

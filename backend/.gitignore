@@ -4,7 +4,8 @@
 *.dll
 *.so
 *.dylib
-
+setenv.sh
+test.http
 # Test binary, built with `go test -c`
 *.test
 

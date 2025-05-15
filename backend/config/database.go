@@ -1,11 +1,13 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 
 	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // DBConfig データベース設定
@@ -29,17 +31,15 @@ func NewDBConfig() *DBConfig {
 }
 
 // ConnectDB データベースに接続
-func ConnectDB(config *DBConfig) (*sql.DB, error) {
+func ConnectDB(config *DBConfig) (*gorm.DB, error) {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		config.Host, config.Port, config.User, config.Password, config.DBName)
 
-	db, err := sql.Open("postgres", connStr)
+	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
-		return nil, err
-	}
-
-	if err := db.Ping(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to connect database: %w", err)
 	}
 
 	return db, nil
