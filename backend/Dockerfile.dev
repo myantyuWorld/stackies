@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 8080
 
 # ホットリロードでアプリケーションを起動
-CMD ["air", "-c", ".air.toml"] 
+CMD ["sh", "-c", "source setenv.sh && air -c .air.toml"] 
